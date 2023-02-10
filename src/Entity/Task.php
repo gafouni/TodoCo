@@ -1,84 +1,80 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table
- */
+
+#[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    
+    #[ORM\Column(type:'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]   
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    
+    #[ORM\Column(type:'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Vous devez saisir un titre.")
-     */
+    
+    #[ORM\Column(type:"string")]
+    #[Assert\NotBlank(message:"Vous devez saisir un titre.")]
     private $title;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Vous devez saisir du contenu.")
-     */
+    
+    #[ORM\Column(type:"text")]
+    #[Assert\NotBlank(message:"Vous devez saisir du contenu.")]
     private $content;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    
+    #[ORM\Column(type:"boolean")]
     private $isDone;
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime();
+        $this->createdAt = new \DateTimeImmutable();
         $this->isDone = false;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+        return $this;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle( string $title)
     {
         $this->title = $title;
+        return $this;
     }
 
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent($content)
+    public function setContent( string $content)
     {
         $this->content = $content;
+        return $this;
     }
 
     public function isDone()
