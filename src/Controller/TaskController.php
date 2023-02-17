@@ -50,9 +50,13 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/edit', name:"taskEdit")]
     
-    public function editAction( int $id, Request $request, EntityManagerInterface $em): Response
+    public function edit_task( int $id, Request $request, EntityManagerInterface $em): Response
     {
+
         $task = new Task();
+
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas midifier cette tâche" );
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -96,8 +100,11 @@ class TaskController extends AbstractController
 
     public function deleteTask(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
+
         $task = new Task();
         $task = $taskRepository->find($id);
+
+        $this->denyAccessUnlessGranted('TASK_DELETE', $task, "Vous ne pouvez pas supprimer cette tâche" );
 
         // $em = $this->getDoctrine()->getManager();
         $em->remove($task);

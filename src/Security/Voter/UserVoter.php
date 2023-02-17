@@ -9,12 +9,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class TaskVoter extends Voter
+class UserVoter extends Voter
 {
     
     
-    const EDIT = 'TASK_EDIT';
-    const DELETE = 'TASK_DELETE';
+    const EDIT = 'USER_EDIT';
 
     private $security;
 
@@ -26,12 +25,12 @@ class TaskVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
+        if (!in_array($attribute, [self::EDIT])) {
             return false;
         }
 
         // only vote on `Post` objects
-        if (!$subject instanceof Task) {
+        if (!$subject instanceof user) {
             return false;
         }
 
@@ -66,29 +65,21 @@ class TaskVoter extends Voter
         }
 
         return false;
-        // you know $subject is a Post object, thanks to `supports()`
-        // /** @var Task $task */
-        // $task = $subject;
-
-        // return match($attribute) {
-        //     self::EDIT => $this->canEdit($task, $user),
-        //     self::DELETE => $this->canDelete($task, $user),
-        //     default => throw new \LogicException('This code should not be reached!')
-        // };
+        
     }
 
-    private function canEdit(Task $task, UserInterface $user): bool
-    {
-        // this assumes that the Post object has a `getOwner()` method
-        return $user === $task->getUser();
+    // private function canEdit(Task $task, UserInterface $user): bool
+    // {
+    //     // this assumes that the Post object has a `getOwner()` method
+    //     return $user === $task->getUser();
 
-        // the Post object could have, for example, a method `isPrivate()`
-        // return !$task->isPrivate();
-    }
+    //     // the Post object could have, for example, a method `isPrivate()`
+    //     // return !$task->isPrivate();
+    // }
 
-    private function canDelete(Task $task, UserInterface $user): bool
-    {
-        // this assumes that the Post object has a `getOwner()` method
-        return $user === $task->getUser();
-    }
+    // private function canDelete(Task $task, UserInterface $user): bool
+    // {
+    //     // this assumes that the Post object has a `getOwner()` method
+    //     return $user === $task->getUser();
+    // }
 }
