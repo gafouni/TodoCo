@@ -25,7 +25,8 @@ class UserController extends AbstractController
     
     #[Route('/users/create', name:"user_create")]
      
-    public function create_user(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $em)
+    public function create_user(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
+                                EntityManagerInterface $em): Response
     {
         $user = new User();
         $roles = $user->getRoles();
@@ -34,11 +35,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            //$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            
             $user->setPassword(
-                    $userPasswordHasher->hashPassword($user, $form('plainPassword')->getData()))
+                    $userPasswordHasher->hashPassword($user, $user->getPassword()))
                 ->setRoles($roles, []);
 
             $em->persist($user);
@@ -55,28 +54,32 @@ class UserController extends AbstractController
     
     #[Route('/users/{id}/edit', name:"editUser")]
 
-    public function editUser( Request $request)
+    public function editUser( int $id, Request $request, EntityManagerInterface $em): Response
     {
         $user = new User();
+        // $roles = $user->getRoles();
         $form = $this->createForm(UserType::class, $user);
+        // dd($form);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
 
-            //$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword(
-                    $userPasswordHasher->hashPassword($user, $form('plainPassword')->getData()))
-                ->setRoles($roles, []);
+            
+             $user->setPassword(
+                     $userPasswordHasher->hashPassword($user, $user->getPassword()));
+                    // -> setRoles($roles, []);
 
+              
             $em->persist($user);
             $em->flush();
-
+                
             $this->addFlash('success', "L'utilisateur a bien été modifié.");
 
             return $this->redirectToRoute('userList');
         }
-        return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+        return $this->render('user/edit.html.twig', ['form' => $form, 'user' => $user]);
+        
     }
 }

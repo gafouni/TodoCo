@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method MyEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method MyEntity[]    findAll()
  * @method MyEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MyEntityRepository extends ServiceEntityRepository
+class TaskRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -36,6 +36,19 @@ class MyEntityRepository extends ServiceEntityRepository
         if ($flush){
             $this->getEntityManager()->flush();
         }
+    }
+
+
+    public function toggle(Task $task, bool $flush = false):void 
+    {
+        $task->toggle(!$task->isDone());
+
+        $this->getEntityManager()->persist($task);
+
+        if ($flush){
+            $this->getEntityManager()->flush();
+        }
+
     }
     // /**
     //  * @return MyEntity[] Returns an array of MyEntity objects

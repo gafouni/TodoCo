@@ -26,11 +26,14 @@ class UserType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Tapez le mot de passe à nouveau'],
             ])
-            ->add('roles', ChoiceType::class, ['choices' => [
-                                                'utilisateur' => 'ROLE_USER',
-                                                'administrateur' => 'ROLE_ADMIN'
+            ->add('roles', ChoiceType::class, [ 'label' => "Role de l'utilisateur",
+                                                'choices' => [
+                                                'Utilisateur' => 'ROLE_USER',
+                                                'Admin' => 'ROLE_ADMIN'
                                                 ],
-                                               'multiple' =>true 
+                                                'multiple' => true,
+                                                'expanded' => true
+                                               
                                                ]     
                                         );
         

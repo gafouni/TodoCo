@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use DataTimeImmutable;
+use DateTimeImmutable;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,18 +23,18 @@ class TaskController extends AbstractController
 
     #[Route('/task/create', name:"task_create")]
 
-    public function createTask(Request $request, EntityManagerInterface $em)
+    public function createTask(Request $request, EntityManagerInterface $em): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmited() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $task->getCreatedAt(new DataTimeImmutable('now'))
-                ->setUser($this->getUser());
+            // $em = $this->getDoctrine()->getManager();
+            $task->getCreatedAt(new DateTimeImmutable('now'));
+            $task->setUser($this->getUser());
 
             $em->persist($task);
             $em->flush();
@@ -43,22 +44,22 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('taskList');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('task/create.html.twig', ['form' => $form]);
     }
 
     
     #[Route('/task/{id}/edit', name:"taskEdit")]
     
-    public function editAction( Request $request, EntityManagerInterface $em)
+    public function editAction( int $id, Request $request, EntityManagerInterface $em): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmited() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
+            // $em = $this->getDoctrine()->getManager();
             $task->getCreatedAt(new DataTimeImmutable('now'))
                 ->setUser($this->getUser());
 
@@ -80,13 +81,12 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/toggle', name:"taskToggle")]
 
-    public function toggleTask(EntityManagerInterface $em)
+    public function toggleTask(TaskRepository $taskRepository)
     {
         $task = new Task();
-        $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
-
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        $task = $taskRepository->toggle($task);
+        
+        $this->addFlash('success', 'Cette tâche a bien été marquée comme faite.');
 
         return $this->redirectToRoute('taskList');
     }
@@ -94,12 +94,12 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/delete', name:"taskDelete")]
 
-    public function deleteTask()
+    public function deleteTask(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
         $task = new Task();
-        $task = $taskRepository->find(id);
+        $task = $taskRepository->find($id);
 
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
 
