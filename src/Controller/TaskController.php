@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -53,9 +54,9 @@ class TaskController extends AbstractController
     public function edit_task( int $id, Request $request, EntityManagerInterface $em): Response
     {
 
-        $task = new Task();
+        $task = $em->getRepository(Task::class)->find($id);
 
-        $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas midifier cette tâche" );
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas modifier cette tâche" );
 
         $form = $this->createForm(TaskType::class, $task);
 
@@ -64,7 +65,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $em = $this->getDoctrine()->getManager();
-            $task->getCreatedAt(new DataTimeImmutable('now'))
+            $task->getCreatedAt(new DateTimeImmutable('now'))
                 ->setUser($this->getUser());
 
             $em->persist($task);

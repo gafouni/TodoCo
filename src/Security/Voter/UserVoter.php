@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Voter;
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -53,18 +53,18 @@ class UserVoter extends Voter
         }
 
 
-        /** @var Task $subject */
+        // /** @var Task $subject */
 
-        switch ($attribute) {
-            case self::EDIT:
-                return $this->canEdit($user, $subject); // :)
-                break;
-            case self::DELETE:
-                return $this->canDelete($user, $subject);
-                break; 
-        }
+        // switch ($attribute) {
+        //     case self::EDIT:
+        //         return $this->canEdit($user, $subject); // :)
+        //         break;
+        //     case self::DELETE:
+        //         return $this->canDelete($user, $subject);
+        //         break; 
+        // }
 
-        return false;
+        // return false;
         
     }
 

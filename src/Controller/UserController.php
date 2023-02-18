@@ -56,11 +56,13 @@ class UserController extends AbstractController
     #[Route('/users/{id}/edit', name:"editUser")]
     
 
-    public function editUser( int $id, Request $request, EntityManagerInterface $em): Response
+    public function editUser( int $id, Request $request, EntityManagerInterface $em, 
+                            UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', "Vous ne pouvez pas modifier l'utilisateur" );
 
-        $user = new User();
+        $user = $em->getRepository(User::class)->find($id);
+        
         // $roles = $user->getRoles();
         $form = $this->createForm(UserType::class, $user);
         // dd($form);
@@ -72,7 +74,7 @@ class UserController extends AbstractController
 
             
              $user->setPassword(
-                     $userPasswordHasher->hashPassword($user, $user->getPassword()));
+                    $userPasswordHasher->hashPassword($user, $user->getPassword()));
                     // -> setRoles($roles, []);
 
               

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Voter;
 
 use App\Entity\Task;
 use App\Entity\User;
-use Symfony\Component\Security\Core\Security;
+// use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -58,10 +59,10 @@ class TaskVoter extends Voter
 
         switch ($attribute) {
             case self::EDIT:
-                return $this->canEdit($user, $subject); // :)
+                return $this->canEdit( $subject, $user); // :)
                 break;
             case self::DELETE:
-                return $this->canDelete($user, $subject);
+                return $this->canDelete( $subject, $user);
                 break; 
         }
 
