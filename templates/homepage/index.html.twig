@@ -6,10 +6,11 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <img src="{{ asset('Images\paperclip-g9c4eba470_1920.jpg') }}" alt="Trombones"/>
-        </div>
+    {# <div class="row"> #}
+        {# <div class="col-md-12"> #}
+            {# <img src="{{ asset('Img\paperclip-g9c4eba470_1920.jpg') }}" alt="Trombones"/> #}
+        {# </div> #}
+    {# </div>     #}
     <div class="row">
         <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
         <a href="{{ path('taskList') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
