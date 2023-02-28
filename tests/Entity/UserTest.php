@@ -2,7 +2,9 @@
 
 namespace App\tests\Entity;
 
+use App\Entity\Task;
 use App\Entity\User;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 
@@ -15,15 +17,29 @@ class UserTest extends TestCase{
         $user->setEmail('email');
         $user->setPassword('password');
         $user->setUsername('username');
-        $user->setRoles(['roles']);
+        $user->setRoles(['ROLE_USER']);
+        
 
         $this->assertEquals("email", $user->getEmail());
         $this->assertEquals("password", $user->getPassword());
         $this->assertEquals("username", $user->getUsername());
-        $this->assertEquals("roles", $user->getRoles());
+        $this->assertEquals(["ROLE_USER"], $user->getRoles());
 
     }
+
+
     
+
+    public function testRemoveTask() {
+
+        $task = new Task();
+        $user = new User();
+
+        
+
+    }
+
+
 
 
 

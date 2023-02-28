@@ -22,7 +22,12 @@ class TaskTest extends TestCase{
 
     }
 
-    
+    public function testCreatedAt() {
+
+        $task = new Task();
+        $this->assertTrue($task->getCreatedAt() instanceof \DateTimeImmutable);
+
+    }
 
 
 
