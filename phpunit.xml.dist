@@ -30,6 +30,15 @@
         <exclude>
         <directory suffix=".php">src/DataFixtures</directory>
         </exclude>
+
+        <exclude>
+        <directory suffix=".php">src/Repository</directory>
+        </exclude>
+
+        <exclude>
+        <directory suffix=".php">src/Security</directory>
+        </exclude>
+        
     </coverage>
 
     <listeners>

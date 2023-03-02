@@ -9,8 +9,8 @@ class HomeControllerTest extends WebTestCase
 {
     public function testHomepage(){
         $client = static::createClient();
-        $client->request(method: 'GET', uri: '/');
-        $this->assertResponseStatusCodeSame(expectedCode: Response::HTTP_OK);
+        $client->request('GET', '/');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
 
