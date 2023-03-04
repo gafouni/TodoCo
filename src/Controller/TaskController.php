@@ -65,8 +65,8 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $em = $this->getDoctrine()->getManager();
-            $task->getCreatedAt(new DateTimeImmutable('now'))
-                ->setUser($this->getUser());
+            $task->setCreatedAt(new DateTimeImmutable('now'));
+            $task->setUser($this->getUser());
 
             $em->persist($task);
             $em->flush();

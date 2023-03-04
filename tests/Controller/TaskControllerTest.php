@@ -24,18 +24,14 @@ class TaskControllerTest extends WebTestCase
     public function testCreateTask():void
     {
         $client = static::createClient();
-        // $urlGenerator = $client->getContainer()->get('router');
-        // $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+        
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneByEmail('valerie.guillet@gmail.com');
-        // $user = $entityManager->find(User::class, 1);
-
+        $user = $userRepository->findOneByEmail('valerie.guillet@ribeiro.com');
+        
         $client->loginUser($user);
 
-        // $crawler = $client->request(Request::METHOD_GET, $urlGenerator->generate('task_create'));
         $crawler = $client->request('GET', '/task/create');
 
-        //$form = $crawler->filter('form[name=task]')->form([
         $form = $crawler->selectButton('Ajouter')->form([    
             'task[title]'=>"Organisation des equipes",
             'task[content]'=> floatVal(33)
@@ -53,7 +49,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createClient();
         
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneByEmail('valerie.guillet@gmail.com');
+        $user = $userRepository->findOneByEmail('valerie.guillet@ribeiro.com');
     
         $client->loginUser($user);
         $taskRepository = static::getContainer()->get(TaskRepository::class);
@@ -61,9 +57,7 @@ class TaskControllerTest extends WebTestCase
             'user' =>$user
         ]);
 
-        $crawler = $client->request('GET', '/task/2/edit');
-        // $this->assertSelectorTextContains('button', 'Modifier');
-
+        $crawler = $client->request('GET', '/task/1/edit');
         
         $form = $crawler->selectButton('Modifier')->form([    
             'task[title]'=>"Organisation des jeux",
@@ -96,7 +90,7 @@ class TaskControllerTest extends WebTestCase
         
         $this->assertResponseRedirects();
         $client->followRedirect();
-        // $this->assertSelectorExists('success');
+        
 
 
         

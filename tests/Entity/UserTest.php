@@ -30,14 +30,7 @@ class UserTest extends TestCase{
 
     
 
-    public function testRemoveTask() {
-
-        $task = new Task();
-        $user = new User();
-
-        
-
-    }
+    
 
 
 
