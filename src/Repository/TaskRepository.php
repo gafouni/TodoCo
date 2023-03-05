@@ -39,17 +39,6 @@ class TaskRepository extends ServiceEntityRepository
     }
 
 
-    public function toggle(Task $task, bool $flush = false):void 
-    {
-        $task->toggle(!$task->isDone());
-
-        $this->getEntityManager()->persist($task);
-
-        if ($flush){
-            $this->getEntityManager()->flush();
-        }
-
-    }
     // /**
     //  * @return MyEntity[] Returns an array of MyEntity objects
     //  */

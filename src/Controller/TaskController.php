@@ -86,14 +86,18 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/toggle', name:"taskToggle")]
 
-    public function toggleTask(TaskRepository $taskRepository)
+    public function toggleTaskAction(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
         $task = new Task();
-        $task = $taskRepository->toggle($task);
-        
-        $this->addFlash('success', 'Cette tâche a bien été marquée comme faite.');
 
-        return $this->redirectToRoute('taskList');
+        $task->toggle(!$task->isDone());
+
+        $em->persist($task);
+        $em->flush();
+
+        $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.'));
+
+        return $this->redirectToRoute('task_list');
     }
 
     
