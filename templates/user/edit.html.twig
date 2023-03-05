@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block header_title %}<h1>Modifier <strong>{{ user.username }}</strong></h1>{% endblock %}
-{% block header_img %}{% endblock %} 
+{# {% block header_title %}<h1>Modifier <strong>{{ user.username }}</strong></h1>{% endblock %} #}
+{# {% block header_img %}{% endblock %}  #}
 
 {% block body %}
+
+    <h2>Modifiez les informations de l'utilisateur</h2><br>
+
     <div class="row">
         {{ form_start(form) }}
             {{ form_row(form.username, {'label': 'Nom d\'utilisateur'}) }}

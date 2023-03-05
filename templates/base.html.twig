@@ -28,9 +28,10 @@
         <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">To Do List app</a>
+                    <a class="navbar-brand" href="{{ path('homepage')}}">ToDo_Co</a>
 
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                    <img src="{{ asset('assets/img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                    
                 </div>
             </div>
         </nav>
@@ -68,8 +69,8 @@
 
                     {% block header_title %}{% endblock %}
                     {# {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %} #}
-                    {# {% block header_img %}<img class="slide-image" src="{{ asset('img/a-book-gfb5c4e25e_1920.jpg') }}" alt="Image principale">{% endblock %} #}
-                    {% block header_img %}<img src="{{ asset('img/a-book-gfb5c4e25e_1920.jpg') }}" alt="Image principale">{% endblock %}
+                    {# {% block header_img %}<img class="slide-image" src="{{ asset('assets/images/books-gb737978b2_1920.jpg') }}" widht = "1200px"; height = "80px";  alt="Image principale">{% endblock %}  #}
+                    {% block header_img %}<img src="{{ asset('assets/images/coffee-g784a40df5_1920.jpg') }}" width = "1150px"; height = "150px"; alt="Image principale">{% endblock %}
                 </div>
             </div>
 
@@ -86,9 +87,12 @@
         <div class="container">
 
             <hr>
-            <footer>
+            <footer style="background-color: #e3f2fd; width:100%; margin:0;">
                 <div class="row">
                     <div class="col-lg-12">
+                        <p>ToDo_Co</p>
+                        <p>Plus de 5 millions de visiteurs nous font confiance</p>
+
                         <p class="pull-right">Copyright &copy; OpenClassrooms</p>
                     </div>
                 </div>
