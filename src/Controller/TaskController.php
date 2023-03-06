@@ -26,7 +26,9 @@ class TaskController extends AbstractController
 
     public function createTask(Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task = new Task();
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -86,7 +88,7 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/toggle', name:"taskToggle")]
 
-    public function toggleTaskAction(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
+    public function toggleTaskAction(EntityManagerInterface $em)
     {
         $task = new Task();
 

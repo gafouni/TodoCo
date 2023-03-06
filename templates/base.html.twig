@@ -42,6 +42,7 @@
 
                 {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
+                <a href="{{ path('userList') }}" class="btn btn-primary">Liste des utilisateurs</a>
                 {% endif %}
 
                 {% if app.user %}
