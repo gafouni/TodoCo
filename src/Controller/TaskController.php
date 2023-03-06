@@ -2,61 +2,82 @@
 
 namespace App\Controller;
 
-use AppBundle\Entity\Task;
-use AppBundle\Form\TaskType;
+use App\Entity\Task;
+use App\Form\TaskType;
+use DateTimeImmutable;
+use App\Repository\TaskRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
-    /**
-     * @Route("/tasks", name="task_list")
-     */
-    public function listAction()
+    
+    #[Route('/task/list', name:"taskList")]
+
+    public function taskList(TaskRepository $taskRepository)
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
+        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAll()]);
     }
 
     #[Route('/task/create', name:"task_create")]
 
-    public function createAction(Request $request)
+    public function createTask(Request $request, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task = new Task();
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // $em = $this->getDoctrine()->getManager();
+            $task->getCreatedAt(new DateTimeImmutable('now'));
+            $task->setUser($this->getUser());
 
             $em->persist($task);
             $em->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('taskList');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('task/create.html.twig', ['form' => $form]);
     }
 
-    /**
-     * @Route("/tasks/{id}/edit", name="task_edit")
-     */
-    public function editAction(Task $task, Request $request)
+    
+    #[Route('/task/{id}/edit', name:"taskEdit")] 
+    
+    public function edit_task( int $id, Request $request, EntityManagerInterface $em): Response
     {
+
+        $task = $em->getRepository(Task::class)->find($id);
+
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas modifier cette tâche" );
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->addFlash('success', 'La tâche a bien été modifiée.');
+            // $em = $this->getDoctrine()->getManager();
+            $task->setCreatedAt(new DateTimeImmutable('now'));
+            $task->setUser($this->getUser());
 
-            return $this->redirectToRoute('task_list');
+            $em->persist($task);
+            $em->flush();
+
+            $this->addFlash('success', 'La tâche a été bien été modifiée.');
+
+            return $this->redirectToRoute('taskList');
         }
+
 
         return $this->render('task/edit.html.twig', [
             'form' => $form->createView(),
@@ -64,30 +85,40 @@ class TaskController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/tasks/{id}/toggle", name="task_toggle")
-     */
-    public function toggleTaskAction(Task $task)
-    {
-        $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+    
+    #[Route('/task/{id}/toggle', name:"taskToggle")]
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+    public function toggleTaskAction(EntityManagerInterface $em)
+    {
+        $task = new Task();
+
+        $task->toggle(!$task->isDone());
+
+        $em->persist($task);
+        $em->flush();
+
+        $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.'));
 
         return $this->redirectToRoute('task_list');
     }
 
-    /**
-     * @Route("/tasks/{id}/delete", name="task_delete")
-     */
-    public function deleteTaskAction(Task $task)
+    
+    #[Route('/task/{id}/delete', name:"taskDelete")]
+
+    public function deleteTask(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
+
+        $task = new Task();
+        $task = $taskRepository->find($id);
+
+        $this->denyAccessUnlessGranted('TASK_DELETE', $task, "Vous ne pouvez pas supprimer cette tâche" );
+
+        // $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('taskList');
     }
 }

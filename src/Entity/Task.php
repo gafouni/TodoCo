@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TaskRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -20,7 +22,7 @@ class Task
     private $createdAt;
 
     
-    #[ORM\Column(type:"string")]
+    #[ORM\Column(type:"string")] 
     #[Assert\NotBlank(message:"Vous devez saisir un titre.")]
     private $title;
 
@@ -39,7 +41,7 @@ class Task
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
         $this->isDone = false;
     }
 

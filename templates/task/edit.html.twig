@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block body %}<br>
+
+    <h2>Modifiez votre tache</h2><br>
     <div class="row">
-        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
-            {{ form_widget(form) }}
+        {{ form_start(form) }}
+            {{ form_row(form.title, {'label': 'titre'}) }}
+            {{ form_row(form.content, {'label': 'Description'}) }}
 
             <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
