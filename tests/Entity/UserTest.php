@@ -27,7 +27,21 @@ class UserTest extends TestCase{
 
     }
 
+    public function testAddGetRemoveTasks() {
+        $user = new user();
+        $task = new Task();
 
+        $this->assertEmpty($user->getTasks());
+
+        $user->addTask($task);
+        $this->assertContains($task, $user->getTasks());
+
+        $user->removeTask($task);
+        $this->assertEmpty($user->getTasks());
+
+
+
+    }
     
 
     

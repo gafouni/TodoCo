@@ -88,18 +88,24 @@ class TaskController extends AbstractController
     
     #[Route('/task/{id}/toggle', name:"taskToggle")]
 
-    public function toggleTaskAction(EntityManagerInterface $em)
+    public function toggleTaskAction(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
-        $task = new Task();
+        $task = $taskRepository->find($id);
 
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas modifier cette tâche" );
         $task->toggle(!$task->isDone());
-
         $em->persist($task);
         $em->flush();
 
-        $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.'));
+        if ($task->isDone() === false) {
+            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme non termitée.', $task->getTitle()));
+        } else {
+            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        }
 
-        return $this->redirectToRoute('task_list');
+        // $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.'));
+
+        return $this->redirectToRoute('taskList');
     }
 
     

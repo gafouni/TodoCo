@@ -24,7 +24,7 @@ class UserFormTest extends WebTestCase
 
     }    
 
-    public function testCreateTaskForm(): void {
+    public function testCreateUserForm(): void {
 
         // $client = static::createClient();
         $client = $this->loginAdmin();
@@ -35,7 +35,7 @@ class UserFormTest extends WebTestCase
         $this->assertSelectorTextContains('label', 'Adresse mail' );
 
         //Recuperation du formulaire
-        $submitButton = $crawler->selectButton('Modifier');
+        $submitButton = $crawler->selectButton('Ajouter');
         $form = $submitButton->form();
 
         $form["user[email]"] = "mk@todo.com";
@@ -43,13 +43,14 @@ class UserFormTest extends WebTestCase
         $form["user[username]"] = "Marie Kondo";
         $form ["user[roles]"] = "ROLE_USER";
 
-        //soumission du formulaire
+        // //soumission du formulaire
         $client->submit($form);
 
-        //verification du statut HTTP
+        // //verification du statut HTTP
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
 
         $client->followRedirect();
+
 
 
 
