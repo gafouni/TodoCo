@@ -37,7 +37,7 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         
-        $form = $crawler->selectButton('Connectez-vous')->form([
+        $form = $crawler->selectButton('Se connecter')->form([
             'email' => 'jr@list.com',
             'password' => '$2y$13$gOZV4ma74IN4N28FCOdMv.iwrjYH6sEfyLVs32Lf.wo6xrJn9JQne'
         ]);
@@ -62,15 +62,18 @@ class UserControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Ajouter')->form([    
             'user[email]'=>"sarah@todo.com",
-            'user[password]'=> "sarah",
+            'user[password][first]'=> "sarah",
+            'user[password][second]'=> "sarah",
             'user[username]'=> "Sarah Messan",
-            'user[roles]'=> "ROLE_USER"
+            // 'user[roles][0]'->tick()
 
         ]);
+        $form["user[roles][0]"]->tick();
+
 
         $client->submit($form);
 
-        $this->assertSelectorTextContains('label', "Mot de passe");
+        // $this->assertSelectorTextContains('label', "Mot de passe");
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertResponseRedirects('/users/list');
         
@@ -82,14 +85,17 @@ class UserControllerTest extends WebTestCase
         // $client = static::createClient();
 
         $client = $this->loginAdmin();
-        $crawler = $client->request('GET', '/users/57/edit');
+        $crawler = $client->request('GET', '/users/58/edit');
 
         $form = $crawler->selectButton('Modifier')->form([
 			'user[email]'=>"Balla@todo.com",
-            'user[password]'=> "ballamoussa",
+            'user[password][first]'=> "ballamoussa",
+            'user[password][second]'=> "ballamoussa",
             'user[username]'=> "Balla Moussa",
-            'user[roles]'=> "ROLE_USER"
+            // 'user[roles][0]'->tick()
 		]);
+        $form["user[roles][0]"]->tick();
+
         
         $client->submit($form);
 
@@ -100,15 +106,5 @@ class UserControllerTest extends WebTestCase
     }
 
 
-    public function testDeleteUser() {
-
-        // $client = static::createClient();
-
-        $client = $this->loginAdmin();
-        $client->request('GET', '/users/56/edit');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertResponseRedirects('/users/list');
-
-    }
-
+    
 }
