@@ -31,11 +31,11 @@ class UserFixtures extends Fixture
                 ->setPassword($this->userPasswordHasher->hashPassword($user, "password"))
                 ->setRoles(["ROLE_USER"])
                 ->setUsername($faker->words(2, true));
-            //$this->addReference('anonyme', $user); 
-            // $this->addReference(self::USER_REFERENCE, $user); 
+            
+    
             
             $manager->persist($user);   
-            //$this->addReference(self::USER_REFERENCE, $user); 
+            
             }
 
         $manager->flush();

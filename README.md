@@ -34,5 +34,5 @@
   Lien vers la documentation technique de contribution: CONTRIBUTING.md (A la racine du projet)
   ou encore dans le dossier Documentation  
   Lien vers l'audit de performance du site: Documentation/audit_de_performance.pdf
-  Lien vers l'audit de qualité du code: http
+  Lien vers l'audit de qualité du code:  https://app.codacy.com/gh/gafouni/TodoCo/dashboard?branch=main
  

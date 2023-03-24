@@ -10,7 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method MyEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method MyEntity|null findOneBy(array $criteria, array $orderBy = null)
  * @method MyEntity[]    findAll()
- * @method MyEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MyEntity[]    findBy(array $criteria, array $orderBy = desc, $limit = null, $offset = null)
  */
 class TaskRepository extends ServiceEntityRepository
 {

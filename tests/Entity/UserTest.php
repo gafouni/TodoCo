@@ -14,7 +14,7 @@ class UserTest extends TestCase{
 
         $user = new User();
 
-        $user->setEmail('email');
+        $user->setEmail('email'); 
         $user->setPassword('password');
         $user->setUsername('username');
         $user->setRoles(['ROLE_USER']);

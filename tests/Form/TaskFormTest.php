@@ -7,13 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskFormTest extends WebTestCase 
 {
-
+ 
     public function loginUser()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         
-        $form = $crawler->selectButton('Connectez-vous')->form([
+        $form = $crawler->selectButton('Se connecter')->form([
             'email' => 'valerie.guillet@ribeiro.com',
             'password' => 'password'
         ]);

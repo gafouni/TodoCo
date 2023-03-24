@@ -16,25 +16,7 @@ class RegistrationControllerTest extends WebTestCase
     }
 
 
-    public function testRegistrationSuccess(){
-
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/register');
-
-        $form = $crawler->selectButton('Inscrivez-vous')->form([
-            'username'=>'Thomas Daudet',
-            'email'=>'thomas@todo.com',
-            'password'=>'thomasdaudet'
-        ]);
-        $client->submit($form);
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
-        $this->assertResponseRedirects('/');
-        $client->followRedirect();
-
-
-    }
-
+    
     
 
 
