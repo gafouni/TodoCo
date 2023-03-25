@@ -25,7 +25,7 @@ class HomeControllerTest extends WebTestCase
         $this->assertSelectorTextContains('a.btn.btn-secondary', 'Consulter la liste des tâches terminées');
         $this->assertSelectorTextContains('a.btn.btn-success', 'Se connecter');
         
-
+ 
 
     }
 

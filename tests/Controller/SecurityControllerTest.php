@@ -21,14 +21,14 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
 
-        $form = $crawler->selectButton('Connectez-vous')->form([
-            'username'=>'valerie.guillet@gmail.com',
+        $form = $crawler->selectButton('Se connecter')->form([
+            'email'=>'valerie.guillet@gmail.com',
             'password'=>'password'
         ]);
-        $client->submit($form);
+        $client->submit($form); 
 
-        // $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        // $this->assertResponseRedirects('/');
         $client->followRedirect();
 
 

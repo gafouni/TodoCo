@@ -12,7 +12,7 @@ class TaskTest extends TestCase{
 
     public function testTask () {
 
-        $task = new Task();
+        $task = new Task(); 
 
         $task->setTitle('name');
         $task->setContent('content');
