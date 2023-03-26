@@ -15,7 +15,7 @@
 
  ## Faire une contribution
  * Créez une nouvelle branche pour la fonctionnalité et positionnez vous sur cette branche.
- * Codez une nouvelle fonctionnalité ou modifiez celles déjà existantes
+ * Codez une nouvelle fonctionnalité ou modifiez celles déjà existantes.
  * Ajoutez vos tests unitaires et fonctionnels.
  * Commitez et pushez votre code.
 
