@@ -15,9 +15,9 @@
   editer le fichier intitule ".env", modifier les valeurs de parametrage de la base de donnees 
   
 * Creer la base de donnees:  
-  importer le fichier "todoco.sql" situe a la racine du projet
+  importer le fichier "Data_base/todo_co.sql" situé a la racine du projet
 
-* Installez les fixtures pour avoir une démo de données fictives en développement :  
+* Installer les fixtures pour avoir une démo de données fictives en développement :  
   php app/console doctrine:fixtures:load 
   
 * Lancer le projet:  
@@ -25,9 +25,10 @@
   lancer le serveur de symfony: symfony server:start  
 
 * Tests coverage:  
+ importer le fichier "Data_base/todo_co_test.sql" situé a la racine du projet  
  Pour générer le test coverage, exécuter cette commande:  
  ./vendor/bin/phpunit --coverage-html Coverage_report  
- Pour consulter le résultat, ouvrez dans le navigateur le fichier "Coverage_report/index.html" situé à la source du projet  
+ Pour consulter le résultat, ouvrez dans le navigateur le fichier "Coverage_report/index.html" situé à la racine du projet  
 
 * Documentation technique:  
   Lien vers le guide de l'authentification: Documentation/guide_authentification.pdf  

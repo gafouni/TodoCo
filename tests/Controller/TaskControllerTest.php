@@ -63,7 +63,7 @@ class TaskControllerTest extends WebTestCase
             'task[title]'=> "Etablir le budget",
             'task[content]'=> "C'est à vous de savoir ce que le budget 
                                 mis en œuvre peut vous rapporter par la suite. 
-                                Le retour sur investissement est donc à prendre en compte. "
+                                Le retour sur investissement, très important, est donc à prendre en compte. "
         ]);
             
         $client->submit($form);
