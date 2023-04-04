@@ -39,15 +39,13 @@ class TaskController extends AbstractController
         $task = new Task();
 
         $form = $this->createForm(TaskType::class, $task);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $em = $this->getDoctrine()->getManager();
+            // $taskRepository->setTask($task->getTitle(), $task->getContent(), $task->setUser($this->getUser()));
             $task->getCreatedAt(new DateTimeImmutable('now'));
             $task->setUser($this->getUser());
-
             $em->persist($task);
             $em->flush();
 
@@ -64,21 +62,17 @@ class TaskController extends AbstractController
     
     public function edit_task( int $id, Request $request, EntityManagerInterface $em): Response
     {
-
         $task = $em->getRepository(Task::class)->find($id);
 
         $this->denyAccessUnlessGranted('TASK_EDIT', $task, "Vous ne pouvez pas modifier cette tâche" );
 
         $form = $this->createForm(TaskType::class, $task);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $em = $this->getDoctrine()->getManager();
             $task->setCreatedAt(new DateTimeImmutable('now'));
             $task->setUser($this->getUser());
-
             $em->persist($task);
             $em->flush();
 
@@ -86,8 +80,6 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('taskList');
         }
-
-
         return $this->render('task/edit.html.twig', [
             'form' => $form->createView(),
             'task' => $task,
@@ -112,8 +104,6 @@ class TaskController extends AbstractController
             $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
         }
 
-        // $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.'));
-
         return $this->redirectToRoute('taskList');
     }
 
@@ -122,16 +112,13 @@ class TaskController extends AbstractController
 
     public function deleteTask(int $id, TaskRepository $taskRepository, EntityManagerInterface $em)
     {
-
         $task = new Task();
         $task = $taskRepository->find($id);
 
         $this->denyAccessUnlessGranted('TASK_DELETE', $task, "Vous ne pouvez pas supprimer cette tâche" );
 
-        // $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
-
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return $this->redirectToRoute('taskList');

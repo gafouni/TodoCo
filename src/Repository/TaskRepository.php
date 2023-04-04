@@ -17,6 +17,7 @@ class TaskRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
+
     }
 
     public function add(Task $entity, bool $flush = false):void 

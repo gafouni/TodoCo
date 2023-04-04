@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+// use App\Service\UserService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,24 +26,18 @@ class UserController extends AbstractController
     
     #[Route('/users/create', name:"user_create")]
      
-    public function create_user(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
-                                EntityManagerInterface $em): Response
+    public function create_user(Request $request, UserRepository $userRepository,
+                                UserPasswordHasherInterface $userPasswordHasher): Response
     {
-
         $user = new User();
-        $roles = $user->getRoles();
+        
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $user->setPassword(
-                    $userPasswordHasher->hashPassword($user, $user->getPassword()))
-                ->setRoles($roles, []);
-
-            $em->persist($user);
-            $em->flush();
+            $userRepository->setUser($userPasswordHasher->hashPassword($user, $user->getPassword()), 
+                                        $user->getRoles(), $user->getEmail(), $user->getUsername());
 
             $this->addFlash('success', "L'utilisateur a bien été créé.");
 
@@ -55,7 +50,6 @@ class UserController extends AbstractController
     
     #[Route('/users/{id}/edit', name:"editUser")]
     
-
     public function editUser( int $id, Request $request, EntityManagerInterface $em, 
                             UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -63,20 +57,14 @@ class UserController extends AbstractController
 
         $user = $em->getRepository(User::class)->find($id);
         
-        // $roles = $user->getRoles(); 
         $form = $this->createForm(UserType::class, $user);
-        // dd($form);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-
-            
+        if ($form->isSubmitted() && $form->isValid()) 
+        {                       
              $user->setPassword(
                     $userPasswordHasher->hashPassword($user, $user->getPassword()));
-                    // -> setRoles($roles, []);
-
               
             $em->persist($user);
             $em->flush();

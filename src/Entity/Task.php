@@ -19,7 +19,6 @@ class Task
 
     
     #[ORM\Column(type:'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
-    // #[ORM\Column(type:'dateTimeImmutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $createdAt;
 
     
