@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 27 mars 2023 à 16:32
+-- Généré le : mer. 05 avr. 2023 à 18:23
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -90,7 +90,10 @@ INSERT INTO `task` (`id`, `created_at`, `title`, `content`, `is_done`, `user_id`
 (19, '2023-03-23 14:46:42', 'Hebergement', 'Le choix de l’hébergement est essentiel pour un déplacement professionnel. Vérifiez si l’entreprise privilégie une chaîne hôtelière. ', 0, 64),
 (20, '2023-03-23 14:48:33', 'Programme de travail', 'Il est indispensable de faire le point sur les objectifs du déplacement professionnel, cela afin de bien préparer le voyage.', 0, 61),
 (21, '2023-03-23 14:51:13', 'Gestion des assurances', 'Si nos cartes bleues et la responsabilité civile nous couvrent généralement, vérifiez qu’une assurance pour un trajet professionnel à l’étranger est prévue pour chacun des collaborateurs concernés. ', 0, 64),
-(22, '2023-03-23 15:20:06', 'Calcul des frais', 'Afin de ne rien oublier, faites une liste de tous les documents professionnels dont vous aurez besoin pour le calcul des frais comme : les dossiers, les reportings, les contrats, les notes de synthèse, les documents d’entreprise, etc.', 0, 59);
+(22, '2023-03-23 15:20:06', 'Calcul des frais', 'Afin de ne rien oublier, faites une liste de tous les documents professionnels dont vous aurez besoin pour le calcul des frais comme : les dossiers, les reportings, les contrats, les notes de synthèse, les documents d’entreprise, etc.', 0, 59),
+(23, '2023-03-29 10:11:04', 'Préparation du voyage', 'Un merveilleux voyage', 1, 65),
+(25, '2023-04-04 15:46:45', 'Calcul des premiers frais', 'Les prévisions seront faites pour lundi', 0, 61),
+(26, '2023-04-04 20:51:46', 'Préparation du voyage', 'Il faudra prévoir 3 réunions', 0, 61);
 
 -- --------------------------------------------------------
 
@@ -111,13 +114,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`) VALUES
-(58, 'aime.lemonnier@gmail.com', '[\"ROLE_USER\"]', '$2y$13$qfQ7O7Vgko5p6mdhQRMstuvfta6HyIx9bB/pcmvKiQRy./EMFvxeG', 'Aimé Lemonnier'),
+(58, 'aime.lemonnier@gmail.com', '[\"ROLE_USER\"]', '$2y$13$POUe9SbDG6ShOTdpPmiU6uxjtJPmzrLK.90GYCn/L9iAdQor3Cpqi', 'Aimé Lemonnier'),
 (59, 'valerie.guillet@ribeiro.com', '[\"ROLE_USER\"]', '$2y$13$5N8ob/iKpExrRe7sYFh/ZOZ0ihH2WLsgBxDVl5Zhui1/P33Z7PaBu', 'Valérie Guillet'),
 (60, 'anonyme30@rey.fr', '[\"ROLE_USER\"]', '$2y$13$AwTP4R8VzaegM.B2awel9eni//ha28M7mTtAYelIIdKSu6ngJN3c6', 'Anonyme'),
 (61, 'jr@list.com', '[\"ROLE_ADMIN\"]', '$2y$13$gOZV4ma74IN4N28FCOdMv.iwrjYH6sEfyLVs32Lf.wo6xrJn9JQne', 'Jean Reno'),
 (62, 'salomon@list.com', '[\"ROLE_USER\"]', '$2y$13$qdAcfFCOvWdwC/E5Jpb8NeU6Yj8lSeSd07eUO/eaMgeuMVMmNtffG', 'Salomon Coli'),
 (63, 'noemi@list.com', '[\"ROLE_ADMIN\"]', '$2y$13$OtEOW2xN8uQtsW02FAhH8.AxnNuxWYgaj7AX6DkD0jR7vsEa4p30W', 'Noemi Abo'),
-(64, 'nathalie@list.com', '[\"ROLE_USER\"]', '$2y$13$8A2pUgilu6DJ3EZjsQWmJOfExPqeFl0Igz6TiUyAfgXPS4fNyF4TG', 'Nathalie Colin');
+(64, 'nathalie@list.com', '[\"ROLE_USER\"]', '$2y$13$8A2pUgilu6DJ3EZjsQWmJOfExPqeFl0Igz6TiUyAfgXPS4fNyF4TG', 'Nathalie Colin'),
+(65, 'ak@list.com', '[\"ROLE_USER\"]', '$2y$13$0GjkfE6UBIxR2MNuO2RF5OOTk8aBzs8medQe.uYSrkBO5qyZhhxta', 'awa koté'),
+(66, 'Asso@list.com', '[\"ROLE_USER\"]', '$2y$13$2VN1dGP.ZttSQLsGrbtQXOGPBrEqTs46uY9pjVCj2RLYDf105RZze', 'Marie'),
+(67, 'jalex@list.com', '[\"ROLE_USER\"]', '$2y$13$kLyUIa3DI/IXPox3VBL9t.P.K2GmkydLUXwp74qpb37chd6DrUkRO', 'Jean Alex'),
+(68, 'ps@list.com', '[\"ROLE_USER\"]', '$2y$13$C0dPde/QE6ufOJGWftUfnuRykhrIRuJhqA2OlcCgMaeOxa8C2RhiG', 'Paule Sandi');
 
 --
 -- Index pour les tables déchargées
@@ -166,13 +173,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT pour la table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- Contraintes pour les tables déchargées

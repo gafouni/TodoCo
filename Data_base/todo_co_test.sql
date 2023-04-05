@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 27 mars 2023 à 16:35
+-- Généré le : mer. 05 avr. 2023 à 18:21
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -57,7 +57,7 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `user_id`, `created_at`, `title`, `content`, `is_done`) VALUES
-(2, 59, '2023-03-24 11:15:59', 'Etablir le budget', 'C\'est à vous de savoir ce que le budget \n                                mis en œuvre peut vous rapporter par la suite. \n                                Le retour sur investissement est donc à prendre en compte.', 0),
+(2, 59, '2023-03-29 08:29:28', 'Etablir le budget', 'C\'est à vous de savoir ce que le budget \r\n                                mis en œuvre peut vous rapporter par la suite. \r\n                                Le retour sur investissement, très important, est donc à prendre en compte.', 0),
 (6, 61, '2023-03-06 12:03:05', 'Organisation des promotions', 'Il reste juste à promouvoir votre jeu-concours en l\'annonçant le plus possible. Le succès d\'une opération marketing de ce type dépend beaucoup de sa visibilité.', 0),
 (7, 61, '2023-03-06 13:01:08', 'Designer les gagnants', 'Désignez les gagnants et annoncez-les aux participants. Faites alors le bilan. Celui-ci est positif dans la plupart des cas. Mais si les résultats attendus ne sont pas au rendez-vous, ', 0);
 
@@ -127,7 +127,7 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT pour la table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `user`
