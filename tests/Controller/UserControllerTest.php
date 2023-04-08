@@ -82,8 +82,8 @@ class UserControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        // $this->assertSelectorTextContains('button', "Ajouter");
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('button', "Ajouter");
+        // $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         // $this->assertResponseRedirects('/users/list');
         
     }

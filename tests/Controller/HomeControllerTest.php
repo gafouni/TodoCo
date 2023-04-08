@@ -19,7 +19,7 @@ class HomeControllerTest extends WebTestCase
 
         $this->assertSame(1, $crawler->filter('h1')->count());
 
-        $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
+        $this->assertSelectorTextContains('h1', 'Bienvenu sur Todo Co, l\'application qui vous permet de gérer l\'ensemble de vos tâches sans effort !');
         
         $this->assertSelectorTextContains('a.btn.btn-info', 'Consulter la liste des tâches à faire');
         $this->assertSelectorTextContains('a.btn.btn-secondary', 'Consulter la liste des tâches terminées');
